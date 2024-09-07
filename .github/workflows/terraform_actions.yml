@@ -36,11 +36,6 @@ jobs:
         with:
           terraform_version: latest
 
-      - name: destroy
-        id: destroy
-        run: terraform destroy -auto-approve
-        continue-on-error: true
-
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
@@ -49,6 +44,11 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init -no-color
+      
+      - name: destroy
+        id: destroy
+        run: terraform destroy -auto-approve
+        continue-on-error: true
     
       - name: Terraform Validate
         id: validate
