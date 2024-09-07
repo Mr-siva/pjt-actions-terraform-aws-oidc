@@ -44,11 +44,6 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init -no-color
-      
-      - name: destroy
-        id: destroy
-        run: terraform destroy -auto-approve
-        continue-on-error: true
     
       - name: Terraform Validate
         id: validate
@@ -104,3 +99,14 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
+
+      - name: Check for keyword "destroy"
+        id: keyword-check
+        run: |
+          if [[ $(git log --format=%B -n 1 ${{ github.sha }}) == *"destroy"* ]]; then
+            echo "::set-output name=destroy::true"
+          fi
+    
+      - name: Terraform Destroy
+        if: steps.keyword-check.outputs.destroy == 'true'
+        run: terraform destroy -auto-approve
