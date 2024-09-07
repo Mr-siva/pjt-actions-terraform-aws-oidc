@@ -44,6 +44,11 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init -no-color
+      
+      - name: destroy
+        id: destroy
+        run: terraform destroy -auto-approve
+        continue-on-error: true
     
       - name: Terraform Validate
         id: validate
