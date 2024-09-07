@@ -112,5 +112,5 @@ jobs:
         if: steps.keyword-check.outputs.destroy == 'true'
         run: terraform destroy -auto-approve
 
-      - name: Just Terraform plan
+      - name: Just Terraform plan Again
         run: terraform plan -no-color
