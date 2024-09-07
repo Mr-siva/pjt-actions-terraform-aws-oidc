@@ -36,6 +36,11 @@ jobs:
         with:
           terraform_version: latest
 
+      - name: destroy
+        id: destroy
+        run: terraform destroy -auto-approve
+        continue-on-error: true
+
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
